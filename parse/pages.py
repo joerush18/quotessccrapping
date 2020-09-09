@@ -1,4 +1,3 @@
-from Page_locator.page_locator import PageLocator
 from item_locator.item_locator import ItemLocator
 
 
@@ -12,17 +11,17 @@ class Parse:
     @property
     def content(self):
         locator = ItemLocator.CONTENT
-        quote = self.parent.select_one(locator).string
+        quote = self.parent.find_element_by_css_selector(locator).text
         return quote
 
     @property
     def author(self):
         locator = ItemLocator.AUTHOR
-        author = self.parent.select(locator)
-        return author
+        author = self.parent.find_element_by_css_selector(locator)
+        return author.text
 
     @property
     def tags(self):
         locator = ItemLocator.TAGS
-        tags = self.parent.select(locator)
+        tags = self.parent.find_element_by_css_selector(locator)
         return [e for e in tags]

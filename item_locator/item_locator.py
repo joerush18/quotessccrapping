@@ -1,4 +1,4 @@
 class ItemLocator:
-    CONTENT = 'span.text'
-    AUTHOR = 'span small.author'
-    TAGS = 'div.tags a.tag'
+    CONTENT = 'span.content'
+    AUTHOR = 'span.author'
+    TAGS = 'span.tag'

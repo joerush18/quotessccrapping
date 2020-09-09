@@ -1,11 +1,10 @@
+from selenium import webdriver
+
 from parse.souping import Soup
-import requests
 
-
-html_content = requests.get('http://quotes.toscrape.com').content
-data = Soup(html_content)
+chrome = webdriver.Chrome(executable_path='D:\My room\pythonProject\chromedriver.exe')
+chrome.get('http://quotes.toscrape.com/search.aspx')
+data = Soup(chrome)
 
 for quote in data.souping:
     print(f'{quote.content}')
-
-
