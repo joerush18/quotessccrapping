@@ -1,18 +1,19 @@
 from item_locator.item_locator import ItemLocator
 
 
+# get content of quotes details
 class Parse:
     def __init__(self, parent):
         self.parent = parent
 
     def __repr__(self):
-        return f'<Quotes = {self.content}  by {self.author}>'
+        return f'<Quotes = {self.content}  by {self.author} Tags:- {self.tags}>'
 
     @property
     def content(self):
         locator = ItemLocator.CONTENT
-        quote = self.parent.find_element_by_css_selector(locator).text
-        return quote
+        quote = self.parent.find_element_by_css_selector(locator)
+        return quote.text
 
     @property
     def author(self):
