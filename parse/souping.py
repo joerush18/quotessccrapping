@@ -1,4 +1,6 @@
 from typing import List
+
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select
 
 from parse.pages import Parse
@@ -29,19 +31,31 @@ class Soup:
 
     # tags Activity getting / updating
     @property
-    def tags_dropdown(self):
+    def tags_dropdown(self) -> Select:
         locator = PageLocator.TAG_DROPDOWN
         tags = self.browser.find_element_by_css_selector(locator)
         return Select(tags)
-
-    def get_available_tags(self):
-        return [option.text.strip() for option in self.tags_dropdown.options]
 
     def select_tag(self, tags_name):
         self.tags_dropdown.select_by_visible_text(tags_name)
 
     # submit button work
     @property
-    def search_button(self):
+    def search_button(self) -> ():
         locator = PageLocator.SUBMIT_BUTTON
         return self.browser.find_element_by_css_selector(locator)
+
+    def operations(self,  author, selected_tag):
+        self.select_author(author)
+        try:
+            self.select_tag(selected_tag)
+        except NoSuchElementException:
+            raise InvalidTagError(
+                f'{author}, doesn\'t contain tag {selected_tag}')
+
+        self.search_button.click()
+        return self.souping
+
+
+class InvalidTagError(ValueError):
+    pass

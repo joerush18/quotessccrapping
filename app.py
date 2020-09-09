@@ -1,27 +1,20 @@
 from selenium import webdriver
 
-from parse.souping import Soup
+from parse.souping import Soup, InvalidTagError
 
-# communicating with chrome driver
-chrome = webdriver.Chrome(executable_path='D:\My room\pythonProject\chromedriver.exe')
-chrome.get('http://quotes.toscrape.com/search.aspx')
-data = Soup(chrome)
+try:
+    Location_input = input("Enter Yor chrome driver location: ")
+    LOCATION = Location_input if Location_input else 'D:\My room\pythonProject\chromedriver.exe'
+    author = input("Enter the author you'd like: ")
+    selected_tag = input("Enter the tag: ")
 
-# selecting author from dropdown
-author = input("Enter the author you'd like: ")
-data.select_author(author)
-
-# show tags available
-tags = data.get_available_tags()
-print('Select Tags From Here: [{}]'.format(' | '.join(tags)))
-
-# select tag available
-selected_tag = input("Enter the tags From Above: ")
-data.select_tag(selected_tag)
-
-# select button
-data.search_button.click()
-
-# getting content
-for d in data.souping:
-    print(d.content)
+    # communicating with chrome driver
+    chrome = webdriver.Chrome(executable_path=LOCATION)
+    chrome.get('http://quotes.toscrape.com/search.aspx')
+    data = Soup(chrome)
+    print(data.operations(author, selected_tag))
+except InvalidTagError as e:
+    print(e)
+except Exception as e:
+    print(e)
+    print("An unknown error occurred. Try again")

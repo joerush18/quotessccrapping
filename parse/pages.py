@@ -7,7 +7,7 @@ class Parse:
         self.parent = parent
 
     def __repr__(self):
-        return f'<Quotes = {self.content}  by {self.author} Tags:- {self.tags}>'
+        return f'[Quotes: {self.content} \n Author: {self.author}] \n\n'
 
     @property
     def content(self):
@@ -25,4 +25,4 @@ class Parse:
     def tags(self):
         locator = ItemLocator.TAGS
         tags = self.parent.find_element_by_css_selector(locator)
-        return [e for e in tags]
+        return tags
